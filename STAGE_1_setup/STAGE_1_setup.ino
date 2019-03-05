@@ -183,7 +183,7 @@ void loop(){
     Serial.println(F("*****************************************************"));
     delay(2000);
     
-    Serial.println(F("Searching for MPU-6050 on address 0x68/104"));
+   Serial.println(F("Searching for MPU-6050 on address 0x68/104"));
     delay(1000);
     if(search_gyro(0x68, 0x75) == 0x68){
       Serial.println(F("MPU-6050 found on address 0x68"));
@@ -210,7 +210,37 @@ void loop(){
         gyro_address = 0x68;
       }
     }
-       
+    
+    if(type == 0){
+      Serial.println(F("Searching for L3G4200D on address 0x69/105"));
+      delay(1000);
+      if(search_gyro(0x69, 0x0F) == 0xD3){
+        Serial.println(F("L3G4200D found on address 0x69"));
+        type = 2;
+        gyro_address = 0x69;
+      }
+    }
+    
+    if(type == 0){
+      Serial.println(F("Searching for L3GD20H on address 0x6A/106"));
+      delay(1000);
+      if(search_gyro(0x6A, 0x0F) == 0xD7){
+        Serial.println(F("L3GD20H found on address 0x6A"));
+        type = 3;
+        gyro_address = 0x6A;
+      }
+    }
+    
+    if(type == 0){
+     Serial.println(F("Searching for L3GD20H on address 0x6B/107"));
+      delay(1000);
+      if(search_gyro(0x6B, 0x0F) == 0xD7){
+        Serial.println(F("L3GD20H found on address 0x6B"));
+        type = 3;
+        gyro_address = 0x6B;
+      }
+    }
+    
     if(type == 0){
       Serial.println(F("No gyro device found!!! (ERROR 3)"));
       error = 1;
@@ -219,13 +249,14 @@ void loop(){
     else{
       delay(3000);
       Serial.println(F(""));
-      Serial.println(F("*****************************************************"));
+      Serial.println(F("==================================================="));
       Serial.println(F("Gyro register settings"));
-      Serial.println(F("*****************************************************"));
+      Serial.println(F("==================================================="));
       start_gyro(); //Setup the gyro for further use
     }
   }
-  
+   
+ 
   //If the gyro is found we can setup the correct gyro axes.
   if(error == 0){
     delay(3000);
